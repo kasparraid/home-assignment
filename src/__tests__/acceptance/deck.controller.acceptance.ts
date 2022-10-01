@@ -28,4 +28,18 @@ describe('DeckController (acceptance)', function () {
     expect(res.body.type).to.be.eql(DeckType.FULL);
     expect(res.body.remaining).to.be.eql(52);
   });
+
+  it('User should be able to create a new SHORT Deck', async () => {
+    // given
+    const payload = {type: DeckType.SHORT};
+
+    // when
+    const res = await client.post('/decks').send(payload).expect(200);
+
+    // then
+    expect(res.body).to.have.property('deckId');
+    expect(res.body.type).to.be.eql(DeckType.SHORT);
+    expect(res.body.remaining).to.be.eql(32);
+  });
+
 });

@@ -5,6 +5,7 @@ import {CardService, DeckService} from '../../services';
 import {CardRepository, DeckRepository} from '../../repositories';
 import {juggler} from '@loopback/repository';
 import {givenTestDataSource} from '../database-helpers';
+import {DeckType} from "../../models";
 
 describe('DeckController (integration)', function () {
   let deckController: DeckController;
@@ -34,6 +35,18 @@ describe('DeckController (integration)', function () {
       // then
       expect(result.type).to.eql(aDeckToCreate.type);
       expect(result.remaining).to.eql(52);
+    });
+
+    it('should return a SHORT Deck', async () => {
+      // given
+      const aDeckToCreate = givenDeck({type: DeckType.SHORT});
+
+      // when
+      const result = await deckController.create(aDeckToCreate);
+
+      // then
+      expect(result.type).to.eql(aDeckToCreate.type);
+      expect(result.remaining).to.eql(32);
     });
   });
 });

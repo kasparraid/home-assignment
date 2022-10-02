@@ -4,12 +4,6 @@ import {juggler} from '@loopback/repository';
 const config = {
   name: 'pgdb',
   connector: 'postgresql',
-  host: 'localhost',
-  port: 5432,
-  user: 'postgres',
-  password: 'postgres',
-  database: 'decks',
-  lazyConnect: true,
 };
 
 // Observe application's life cycle to disconnect the datasource when

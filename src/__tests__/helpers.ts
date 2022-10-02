@@ -1,4 +1,12 @@
-import {Card, CardDto, CardSuit, CardValue, Deck, DeckDto, DeckType} from '../models';
+import {
+  Card,
+  CardDto,
+  CardSuit,
+  CardValue,
+  Deck,
+  DeckDto,
+  DeckType,
+} from '../models';
 
 export function givenDeck(deck?: Partial<Deck>) {
   return new Deck({type: DeckType.FULL, shuffled: false, ...deck});
@@ -13,7 +21,7 @@ export function givenDeckDto(deck: Deck, data?: Partial<DeckDto>) {
     deckId: deck.id,
     type: deck.type,
     shuffled: deck.shuffled,
-    ...data
+    ...data,
   });
 }
 
@@ -21,6 +29,6 @@ export function givenCardDto(card: Card, data?: Partial<CardDto>) {
   return new CardDto({
     value: card.value,
     suit: card.suit,
-    ...data
+    ...data,
   });
 }

@@ -6,7 +6,7 @@ export * from './application';
 export async function main(options: ApplicationConfig = {}) {
   const app = new HomeAssignmentApplication(options);
 
-  dotenv.config()
+  dotenv.config();
 
   await app.boot();
   await app.start();

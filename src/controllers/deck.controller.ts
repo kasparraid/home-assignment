@@ -1,8 +1,16 @@
-import {get, getModelSchemaRef, HttpErrors, param, post, requestBody, response} from '@loopback/rest';
+import {
+  get,
+  getModelSchemaRef,
+  HttpErrors,
+  param,
+  post,
+  requestBody,
+  response,
+} from '@loopback/rest';
 import {CardDto, Deck, DeckDto} from '../models';
 import {service} from '@loopback/core';
 import {DeckService} from '../services';
-import validator from "validator";
+import validator from 'validator';
 
 export class DeckController {
   constructor(
@@ -13,7 +21,11 @@ export class DeckController {
   @post('/decks')
   @response(200, {
     description: 'DeckDto model instance',
-    content: {'application/json': {schema: getModelSchemaRef(DeckDto, {exclude: ['cards']})}},
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(DeckDto, {exclude: ['cards']}),
+      },
+    },
   })
   async create(
     @requestBody({
@@ -31,7 +43,7 @@ export class DeckController {
     return this.deckService.createDeck(deck);
   }
 
-  @get('/decks/{id}', )
+  @get('/decks/{id}')
   @response(200, {
     description: 'DeckDto model instance',
     content: {
@@ -41,15 +53,16 @@ export class DeckController {
     },
   })
   async findById(
-      @param.path.string('id', {
-        description: 'Must be valid UUID'
-      }) id: string,
+    @param.path.string('id', {
+      description: 'Must be valid UUID',
+    })
+    id: string,
   ): Promise<DeckDto> {
     this.validateId(id);
     return this.deckService.findDeck(id);
   }
 
-  @post('/decks/{id}/draw', )
+  @post('/decks/{id}/draw')
   @response(200, {
     description: 'CardDto[] model instance',
     content: {
@@ -59,12 +72,15 @@ export class DeckController {
     },
   })
   async draw(
-      @param.path.string('id', {
-        description: 'Must be valid UUID'
-      }) id: string,
-      @param.query.number('count', {
-        description: 'Count how many cards to draw (greater than zero), default 1',
-      }) count = 1,
+    @param.path.string('id', {
+      description: 'Must be valid UUID',
+    })
+    id: string,
+    @param.query.number('count', {
+      description:
+        'Count how many cards to draw (greater than zero), default 1',
+    })
+    count = 1,
   ): Promise<CardDto[]> {
     this.validateId(id);
     if (count <= 0) {
@@ -75,7 +91,7 @@ export class DeckController {
 
   private validateId(id: string): void {
     if (!validator.isUUID(id)) {
-      throw new HttpErrors[422](`Provided id ${id} is not a valid UUID`)
+      throw new HttpErrors[422](`Provided id ${id} is not a valid UUID`);
     }
   }
 }

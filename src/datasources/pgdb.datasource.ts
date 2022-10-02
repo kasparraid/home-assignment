@@ -28,13 +28,15 @@ export class PgdbDataSource
     @inject('datasources.config.pgdb', {optional: true})
     dsConfig: object = config,
   ) {
-    super(Object.assign(dsConfig, {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      lazyConnect: true,
-    }));
+    super(
+      Object.assign(dsConfig, {
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        lazyConnect: true,
+      }),
+    );
   }
 }

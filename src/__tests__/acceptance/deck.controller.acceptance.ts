@@ -70,7 +70,7 @@ describe('DeckController (acceptance)', function () {
 
     // then
     expect(deck.body.deckId).to.be.eql(deckId);
-    expect(deck.body.type).to.be.eql(DeckType.FULL)
+    expect(deck.body.type).to.be.eql(DeckType.FULL);
     expect(deck.body.remaining).to.be.eql(52);
     expect(deck.body.cards).to.have.length(52);
     expect(deck.body.shuffled).to.be.true();
@@ -84,20 +84,20 @@ describe('DeckController (acceptance)', function () {
     const deckId = createdDeck.body.deckId;
 
     // when
-    const deck = await client.get(`/decks/${deckId}`)
-        .expect(200)
-        .expect(res => expect(res.body.remaining).to.eql(52));
+    const deck = await client
+      .get(`/decks/${deckId}`)
+      .expect(200)
+      .expect(res => expect(res.body.remaining).to.eql(52));
 
-    const drawnCards = await client.post(`/decks/${deckId}/draw`)
-        .expect(200);
+    const drawnCards = await client.post(`/decks/${deckId}/draw`).expect(200);
 
-    await client.get(`/decks/${deckId}`)
-        .expect(200)
-        .expect(res => expect(res.body.remaining).to.eql(51));
+    await client
+      .get(`/decks/${deckId}`)
+      .expect(200)
+      .expect(res => expect(res.body.remaining).to.eql(51));
 
     // then
     const expected = deck.body.cards[0];
     expect(drawnCards.body[0]).to.eql(expected);
   });
-
 });

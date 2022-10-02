@@ -3,7 +3,7 @@ import {CardRepository} from '../repositories';
 import {repository} from '@loopback/repository';
 import {Card, CardDto, DeckType} from '../models';
 import {generateCards, shuffleCards, toCardDto} from '../helpers';
-import {HttpErrors} from "@loopback/rest";
+import {HttpErrors} from '@loopback/rest';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class CardService {
@@ -12,7 +12,11 @@ export class CardService {
     private cardRepository: CardRepository,
   ) {}
 
-  async createCards(deckId: string, type: DeckType, shuffled: boolean): Promise<Card[]> {
+  async createCards(
+    deckId: string,
+    type: DeckType,
+    shuffled: boolean,
+  ): Promise<Card[]> {
     let cards = generateCards(deckId, type);
     cards = shuffled ? shuffleCards(cards) : cards;
 
@@ -20,9 +24,14 @@ export class CardService {
   }
 
   async drawCards(id: string, count: number): Promise<CardDto[]> {
-    const drawnCards = await this.cardRepository.find({where: {deckId: id}, limit: count});
+    const drawnCards = await this.cardRepository.find({
+      where: {deckId: id},
+      limit: count,
+    });
     if (count > drawnCards.length) {
-      throw new HttpErrors[422](`Invalid count ${count} to draw, ${drawnCards.length} cards remaining`);
+      throw new HttpErrors[422](
+        `Invalid count ${count} to draw, ${drawnCards.length} cards remaining`,
+      );
     }
 
     await this.deleteCards(drawnCards);

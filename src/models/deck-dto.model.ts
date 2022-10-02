@@ -1,6 +1,6 @@
 import {Model, model, property} from '@loopback/repository';
 import {DeckType} from './deck-type.enum';
-import {CardDto} from "./card-dto.model";
+import {CardDto} from './card-dto.model';
 
 @model()
 export class DeckDto extends Model {
@@ -34,7 +34,7 @@ export class DeckDto extends Model {
   @property({
     type: 'array',
     required: true,
-    itemType: CardDto
+    itemType: CardDto,
   })
   cards: CardDto[];
 

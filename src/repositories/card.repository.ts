@@ -1,5 +1,9 @@
 import {inject, Getter} from '@loopback/core';
-import {DefaultTransactionalRepository, repository, BelongsToAccessor} from '@loopback/repository';
+import {
+  DefaultTransactionalRepository,
+  repository,
+  BelongsToAccessor,
+} from '@loopback/repository';
 import {PgdbDataSource} from '../datasources';
 import {Card, CardRelations, Deck} from '../models';
 import {DeckRepository} from './deck.repository';
@@ -9,12 +13,15 @@ export class CardRepository extends DefaultTransactionalRepository<
   typeof Card.prototype.id,
   CardRelations
 > {
-
   public readonly deck: BelongsToAccessor<Deck, typeof Card.prototype.id>;
 
-  constructor(@inject('datasources.pgdb') dataSource: PgdbDataSource, @repository.getter('DeckRepository') protected deckRepositoryGetter: Getter<DeckRepository>,) {
+  constructor(
+    @inject('datasources.pgdb') dataSource: PgdbDataSource,
+    @repository.getter('DeckRepository')
+    protected deckRepositoryGetter: Getter<DeckRepository>,
+  ) {
     super(Card, dataSource);
-    this.deck = this.createBelongsToAccessorFor('deck', deckRepositoryGetter,);
+    this.deck = this.createBelongsToAccessorFor('deck', deckRepositoryGetter);
     this.registerInclusionResolver('deck', this.deck.inclusionResolver);
   }
 
@@ -24,9 +31,8 @@ export class CardRepository extends DefaultTransactionalRepository<
    */
   async createAllInTransaction(cards: Card[]): Promise<Card[]> {
     const tx = await this.beginTransaction();
-    const created = await this.createAll(cards, {transaction: tx})
+    const created = await this.createAll(cards, {transaction: tx});
     await tx.commit();
     return created;
   }
-
 }

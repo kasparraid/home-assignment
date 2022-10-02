@@ -3,21 +3,21 @@ import {Card, CardDto, CardSuit, CardValue, DeckType} from '../models';
 export function toCardDto(card: Card): CardDto {
   return new CardDto({
     value: card.value,
-    suit: card.suit
+    suit: card.suit,
   });
 }
 
 export function generateCards(deckId: string, type: DeckType): Card[] {
   return Object.values(CardSuit).flatMap(suit => {
     return Object.values(CardValue)
-        .slice(DeckType.FULL === type ? 0 : 4)
-        .map(value => {
-      return new Card({
-        deckId: deckId,
-        value: value,
-        suit: suit,
+      .slice(DeckType.FULL === type ? 0 : 4)
+      .map(value => {
+        return new Card({
+          deckId: deckId,
+          value: value,
+          suit: suit,
+        });
       });
-    });
   });
 }
 

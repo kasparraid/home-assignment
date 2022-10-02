@@ -1,7 +1,7 @@
 import {juggler} from '@loopback/repository';
-import {CardRepository, DeckRepository} from "../repositories";
-import {Card} from "../models";
-import {givenCard, givenDeck} from "./helpers";
+import {CardRepository, DeckRepository} from '../repositories';
+import {Card} from '../models';
+import {givenCard, givenDeck} from './helpers';
 
 export function givenTestDataSource() {
   return new juggler.DataSource({
@@ -16,7 +16,10 @@ export function givenTestDataSource() {
   });
 }
 
-export async function givenEmptyDatabase(cardRepository: CardRepository, deckRepository: DeckRepository) {
+export async function givenEmptyDatabase(
+  cardRepository: CardRepository,
+  deckRepository: DeckRepository,
+) {
   await cardRepository.deleteAll();
   await deckRepository.deleteAll();
 }
@@ -25,6 +28,9 @@ export async function givenCreatedDeck(deckRepository: DeckRepository) {
   return deckRepository.create(givenDeck());
 }
 
-export async function givenCreatedCard(cardRepository: CardRepository, card?: Partial<Card>) {
+export async function givenCreatedCard(
+  cardRepository: CardRepository,
+  card?: Partial<Card>,
+) {
   return cardRepository.create(givenCard(card));
 }

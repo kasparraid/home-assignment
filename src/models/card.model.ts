@@ -31,7 +31,11 @@ export class Card extends Entity {
   })
   suit: CardSuit;
 
-  @belongsTo(() => Deck, {keyFrom: 'deck_id', keyTo: 'id'}, {postgresql: {columnName: 'deck_id'}})
+  @belongsTo(
+    () => Deck,
+    {keyFrom: 'deck_id', keyTo: 'id'},
+    {postgresql: {columnName: 'deck_id'}},
+  )
   deckId: string;
 
   constructor(data?: Partial<Card>) {

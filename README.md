@@ -10,6 +10,8 @@ Spin up postgres database and application docker containers:
 docker-compose up -d
 ```
 
+Open http://127.0.0.1:3000 in your browser.
+
 ## Stop the application
 ```bash
 docker-compose down

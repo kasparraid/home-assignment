@@ -63,7 +63,7 @@ export class DeckController {
         description: 'Must be valid UUID'
       }) id: string,
       @param.query.number('count', {
-        description: 'Count how many cards to draw (greater than zero)'
+        description: 'Count how many cards to draw (greater than zero), default 1',
       }) count = 1,
   ): Promise<CardDto[]> {
     this.validateId(id);

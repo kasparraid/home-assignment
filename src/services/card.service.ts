@@ -20,9 +20,9 @@ export class CardService {
   }
 
   async drawCards(id: string, count: number) {
-    const drawnCards = await this.cardRepository.findByDeckId(id, count);
+    const drawnCards = await this.cardRepository.find({where: {deckId: id}, limit: count});
     if (count > drawnCards.length) {
-      throw new HttpErrors[422](`Requested ${count} cards out of ${drawnCards.length} total`);
+      throw new HttpErrors[422](`Invalid count ${count} to draw, ${drawnCards.length} cards remaining`);
     }
 
     await this.deleteCards(drawnCards);

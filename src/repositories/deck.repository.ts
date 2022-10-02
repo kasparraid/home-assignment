@@ -1,7 +1,7 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory} from '@loopback/repository';
+import {Getter, inject} from '@loopback/core';
+import {DefaultCrudRepository, HasManyRepositoryFactory, repository} from '@loopback/repository';
 import {PgdbDataSource} from '../datasources';
-import {Deck, DeckRelations, Card, DeckWithRelations} from '../models';
+import {Card, Deck, DeckRelations} from '../models';
 import {CardRepository} from './card.repository';
 
 export class DeckRepository extends DefaultCrudRepository<
@@ -18,7 +18,4 @@ export class DeckRepository extends DefaultCrudRepository<
     this.registerInclusionResolver('cards', this.cards.inclusionResolver);
   }
 
-  async findByIdWithCards(id: string): Promise<DeckWithRelations> {
-    return this.findById(id, {include: [{relation: 'cards'}]});
-  }
 }

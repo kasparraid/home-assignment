@@ -3,7 +3,7 @@ import {CardRepository, DeckRepository} from "../repositories";
 import {Card} from "../models";
 import {givenCard, givenDeck} from "./helpers";
 
-export async function givenTestDataSource() {
+export function givenTestDataSource() {
   return new juggler.DataSource({
     name: 'pgdb',
     connector: 'postgresql',
@@ -16,10 +16,7 @@ export async function givenTestDataSource() {
   });
 }
 
-export async function givenEmptyDatabase(ds: juggler.DataSource) {
-  const cardRepository: CardRepository = new CardRepository(ds, async () => deckRepository);
-  const deckRepository: DeckRepository = new DeckRepository(ds, async () => cardRepository);
-
+export async function givenEmptyDatabase(cardRepository: CardRepository, deckRepository: DeckRepository) {
   await cardRepository.deleteAll();
   await deckRepository.deleteAll();
 }

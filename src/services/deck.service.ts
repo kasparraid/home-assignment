@@ -22,7 +22,7 @@ export class DeckService {
   }
 
   async findDeck(id: string) {
-    const deck = await this.deckRepository.findByIdWithCards(id);
+    const deck = await this.deckRepository.findById(id, {include: [{relation: 'cards'}]});
 
     const cards = deck.cards?.map(card => toCardDto(card)) ?? [];
     return toDeckDto(deck,{remaining: cards.length, cards: cards})

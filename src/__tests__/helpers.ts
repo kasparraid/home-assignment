@@ -5,23 +5,22 @@ export function givenDeck(deck?: Partial<Deck>) {
 }
 
 export function givenCard(card?: Partial<Card>) {
-  return new Card({value: CardValue.ACE, suit: CardSuit.SPADES, ...card})
+  return new Card({value: CardValue.ACE, suit: CardSuit.SPADES, ...card});
 }
 
-export function givenDeckDto(data?: Partial<DeckDto>) {
-  const deck = givenDeck();
+export function givenDeckDto(deck: Deck, data?: Partial<DeckDto>) {
   return new DeckDto({
+    deckId: deck.id,
     type: deck.type,
     shuffled: deck.shuffled,
     ...data
-  })
+  });
 }
 
-export function givenCardDto(data?: Partial<CardDto>) {
-  const card = givenCard();
+export function givenCardDto(card: Card, data?: Partial<CardDto>) {
   return new CardDto({
     value: card.value,
     suit: card.suit,
     ...data
-  })
+  });
 }

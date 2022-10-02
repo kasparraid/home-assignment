@@ -29,7 +29,4 @@ export class CardRepository extends DefaultTransactionalRepository<
     return created;
   }
 
-  async findByDeckId(id: string, count: number) {
-    return this.find({where: {deckId: id}, limit: count})
-  }
 }

@@ -1,5 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
 import {DeckType} from './deck-type.enum';
+import {Card, CardWithRelations} from './card.model';
 
 @model({
   settings: {
@@ -42,13 +43,16 @@ export class Deck extends Entity {
   })
   shuffled: boolean;
 
+  @hasMany(() => Card)
+  cards: Card[];
+
   constructor(data?: Partial<Deck>) {
     super(data);
   }
 }
 
 export interface DeckRelations {
-  // describe navigational properties here
+  cards?: CardWithRelations[];
 }
 
 export type DeckWithRelations = Deck & DeckRelations;

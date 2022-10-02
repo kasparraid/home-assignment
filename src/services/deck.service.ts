@@ -2,7 +2,7 @@ import {BindingScope, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {DeckRepository} from '../repositories';
 import {Deck} from '../models';
-import {toDeckDto} from '../helpers';
+import {toCardDto, toDeckDto} from '../helpers';
 import {CardService} from './card.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -19,5 +19,12 @@ export class DeckService {
     const cards = await this.cardService.createCards(deck.id, deck.type, deck.shuffled);
 
     return toDeckDto(deck, {remaining: cards.length});
+  }
+
+  async findDeck(id: string) {
+    const deck = await this.deckRepository.findByIdWithCards(id);
+
+    const cards = deck.cards?.map(card => toCardDto(card)) ?? [];
+    return toDeckDto(deck,{remaining: cards.length, cards: cards})
   }
 }

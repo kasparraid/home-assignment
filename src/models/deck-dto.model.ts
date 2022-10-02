@@ -1,5 +1,6 @@
 import {Model, model, property} from '@loopback/repository';
 import {DeckType} from './deck-type.enum';
+import {CardDto} from "./card-dto.model";
 
 @model()
 export class DeckDto extends Model {
@@ -29,6 +30,13 @@ export class DeckDto extends Model {
     required: true,
   })
   remaining: number;
+
+  @property({
+    type: 'array',
+    required: true,
+    itemType: CardDto
+  })
+  cards: CardDto[];
 
   constructor(data?: Partial<DeckDto>) {
     super(data);

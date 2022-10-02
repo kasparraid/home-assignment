@@ -58,4 +58,22 @@ describe('DeckController (acceptance)', function () {
     expect(res.body.remaining).to.be.eql(52);
   });
 
+  it('User should be able to create a new Deck and retrieve it', async () => {
+    // given
+    const payload = {type: DeckType.FULL, shuffled: true};
+
+    // when
+    const res = await client.post('/decks').send(payload).expect(200);
+
+    const deckId = res.body.deckId;
+    const deck = await client.get(`/decks/${deckId}`).expect(200);
+
+    // then
+    expect(deck.body.deckId).to.be.eql(deckId);
+    expect(deck.body.type).to.be.eql(DeckType.FULL)
+    expect(deck.body.remaining).to.be.eql(52);
+    expect(deck.body.cards).to.have.length(52);
+    expect(deck.body.shuffled).to.be.true();
+  });
+
 });

@@ -1,4 +1,11 @@
-import {Card, CardSuit, CardValue, DeckType} from '../models';
+import {Card, CardDto, CardSuit, CardValue, DeckType} from '../models';
+
+export function toCardDto(card: Card) {
+  return new CardDto({
+    value: card.value,
+    suit: card.suit
+  });
+}
 
 export function generateCards(deckId: string, type: DeckType) {
   return Object.values(CardSuit).flatMap(suit => {

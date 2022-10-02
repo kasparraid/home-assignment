@@ -73,7 +73,7 @@ export class DeckController {
     return this.deckService.drawCards(id, count);
   }
 
-  private validateId(id: string) {
+  private validateId(id: string): void {
     if (!validator.isUUID(id)) {
       throw new HttpErrors[422](`Provided id ${id} is not a valid UUID`)
     }

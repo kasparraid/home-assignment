@@ -1,6 +1,6 @@
 import {Deck, DeckDto} from '../models';
 
-export function toDeckDto(deck: Deck, data?: Partial<DeckDto>) {
+export function toDeckDto(deck: Deck, data?: Partial<DeckDto>): DeckDto {
   return new DeckDto({
     deckId: deck.id,
     type: deck.type,

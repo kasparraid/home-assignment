@@ -22,7 +22,7 @@ export class CardRepository extends DefaultTransactionalRepository<
    * createAll() is wrapped in a transaction since regular createAll() does not guarantee to maintain order
    * @param cards
    */
-  async createAllInTransaction(cards: Card[]) {
+  async createAllInTransaction(cards: Card[]): Promise<Card[]> {
     const tx = await this.beginTransaction();
     const created = await this.createAll(cards, {transaction: tx})
     await tx.commit();

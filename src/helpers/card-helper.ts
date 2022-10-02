@@ -1,13 +1,13 @@
 import {Card, CardDto, CardSuit, CardValue, DeckType} from '../models';
 
-export function toCardDto(card: Card) {
+export function toCardDto(card: Card): CardDto {
   return new CardDto({
     value: card.value,
     suit: card.suit
   });
 }
 
-export function generateCards(deckId: string, type: DeckType) {
+export function generateCards(deckId: string, type: DeckType): Card[] {
   return Object.values(CardSuit).flatMap(suit => {
     return Object.values(CardValue)
         .slice(DeckType.FULL === type ? 0 : 4)
@@ -21,7 +21,7 @@ export function generateCards(deckId: string, type: DeckType) {
   });
 }
 
-export function shuffleCards(cards: Card[]) {
+export function shuffleCards(cards: Card[]): Card[] {
   const shuffledCards = [...cards];
 
   let m = shuffledCards.length;

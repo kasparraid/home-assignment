@@ -201,7 +201,7 @@ describe('DeckController (integration)', function () {
 
       // then
       const expected = [givenCardDto(card)];
-      expect(toJSON(result.body)).to.eql(toJSON(expected));
+      expect(toJSON(result.body.cards)).to.eql(toJSON(expected));
     });
 
     it('should draw multiple cards', async () => {
@@ -223,7 +223,7 @@ describe('DeckController (integration)', function () {
 
       // then
       const expected = [givenCardDto(firstCard), givenCardDto(secondCard)];
-      expect(toJSON(result.body)).to.eql(toJSON(expected));
+      expect(toJSON(result.body.cards)).to.eql(toJSON(expected));
     });
   });
 });

@@ -98,6 +98,6 @@ describe('DeckController (acceptance)', function () {
 
     // then
     const expected = deck.body.cards[0];
-    expect(drawnCards.body[0]).to.eql(expected);
+    expect(drawnCards.body.cards[0]).to.eql(expected);
   });
 });

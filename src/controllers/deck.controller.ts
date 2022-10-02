@@ -7,7 +7,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {CardDto, Deck, DeckDto} from '../models';
+import {CardDtos, Deck, DeckDto} from '../models';
 import {service} from '@loopback/core';
 import {DeckService} from '../services';
 import validator from 'validator';
@@ -64,10 +64,10 @@ export class DeckController {
 
   @post('/decks/{id}/draw')
   @response(200, {
-    description: 'CardDto[] model instance',
+    description: 'CardDtos model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(CardDto),
+        schema: getModelSchemaRef(CardDtos),
       },
     },
   })
@@ -81,7 +81,7 @@ export class DeckController {
         'Count how many cards to draw (greater than zero), default 1',
     })
     count = 1,
-  ): Promise<CardDto[]> {
+  ): Promise<CardDtos> {
     this.validateId(id);
     if (count <= 0) {
       throw new HttpErrors[422]('Count must be greater than zero');

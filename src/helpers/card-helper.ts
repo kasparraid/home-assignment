@@ -1,10 +1,20 @@
-import {Card, CardDto, CardSuit, CardValue, DeckType} from '../models';
+import {
+  Card,
+  CardDto,
+  CardDtos,
+  CardSuit,
+  CardValue,
+  DeckType,
+} from '../models';
 
 export function toCardDto(card: Card): CardDto {
   return new CardDto({
     value: card.value,
     suit: card.suit,
   });
+}
+export function toCardDtos(cards: CardDto[]): CardDtos {
+  return new CardDtos({cards: cards});
 }
 
 export function generateCards(deckId: string, type: DeckType): Card[] {

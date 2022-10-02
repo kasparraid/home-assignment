@@ -1,8 +1,8 @@
 import {BindingScope, injectable, service} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {DeckRepository} from '../repositories';
-import {CardDto, Deck, DeckDto} from '../models';
-import {toCardDto, toDeckDto} from '../helpers';
+import {CardDtos, Deck, DeckDto} from '../models';
+import {toCardDto, toCardDtos, toDeckDto} from '../helpers';
 import {CardService} from './card.service';
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -34,9 +34,10 @@ export class DeckService {
     return toDeckDto(deck, {remaining: cards.length, cards: cards});
   }
 
-  async drawCards(id: string, count: number): Promise<CardDto[]> {
+  async drawCards(id: string, count: number): Promise<CardDtos> {
     const deck = await this.deckRepository.findById(id);
+    const cards = await this.cardService.drawCards(deck.id, count);
 
-    return this.cardService.drawCards(deck.id, count);
+    return toCardDtos(cards);
   }
 }

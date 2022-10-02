@@ -27,6 +27,23 @@ export class DeckController {
       },
     },
   })
+  @response(422, {
+    content: {
+      'application/json': {
+        schema: {
+          example: {
+            error: {
+              statusCode: 422,
+              name: 'UnprocessableEntityError',
+              message:
+                'The request body is invalid. See error object `details` property for more info.',
+              code: 'VALIDATION_FAILED',
+            },
+          },
+        },
+      },
+    },
+  })
   async create(
     @requestBody({
       content: {
@@ -52,6 +69,37 @@ export class DeckController {
       },
     },
   })
+  @response(422, {
+    content: {
+      'application/json': {
+        schema: {
+          example: {
+            error: {
+              statusCode: 422,
+              name: 'UnprocessableEntityError',
+              message: 'Provided id 1 is not a valid UUID',
+            },
+          },
+        },
+      },
+    },
+  })
+  @response(404, {
+    content: {
+      'application/json': {
+        schema: {
+          example: {
+            error: {
+              statusCode: 404,
+              name: 'Error',
+              message: 'Entity not found: Deck with id',
+              code: 'ENTITY_NOT_FOUND',
+            },
+          },
+        },
+      },
+    },
+  })
   async findById(
     @param.path.string('id', {
       description: 'Must be valid UUID',
@@ -68,6 +116,37 @@ export class DeckController {
     content: {
       'application/json': {
         schema: getModelSchemaRef(CardDtos),
+      },
+    },
+  })
+  @response(422, {
+    content: {
+      'application/json': {
+        schema: {
+          example: {
+            error: {
+              statusCode: 422,
+              name: 'UnprocessableEntityError',
+              message: 'Provided id 1 is not a valid UUID',
+            },
+          },
+        },
+      },
+    },
+  })
+  @response(404, {
+    content: {
+      'application/json': {
+        schema: {
+          example: {
+            error: {
+              statusCode: 404,
+              name: 'Error',
+              message: 'Entity not found: Deck with id',
+              code: 'ENTITY_NOT_FOUND',
+            },
+          },
+        },
       },
     },
   })

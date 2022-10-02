@@ -76,4 +76,28 @@ describe('DeckController (acceptance)', function () {
     expect(deck.body.shuffled).to.be.true();
   });
 
+  it('User should be able to create a new Deck and draw a card', async () => {
+    // given
+    const payload = {type: DeckType.FULL, shuffled: true};
+
+    const createdDeck = await client.post('/decks').send(payload).expect(200);
+    const deckId = createdDeck.body.deckId;
+
+    // when
+    const deck = await client.get(`/decks/${deckId}`)
+        .expect(200)
+        .expect(res => expect(res.body.remaining).to.eql(52));
+
+    const drawnCards = await client.post(`/decks/${deckId}/draw`)
+        .expect(200);
+
+    await client.get(`/decks/${deckId}`)
+        .expect(200)
+        .expect(res => expect(res.body.remaining).to.eql(51));
+
+    // then
+    const expected = deck.body.cards[0];
+    expect(drawnCards.body[0]).to.eql(expected);
+  });
+
 });

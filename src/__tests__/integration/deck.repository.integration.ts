@@ -12,7 +12,7 @@ describe('DeckRepository (integration)', function () {
 
   before(async () => {
     ds = await givenTestDataSource();
-    cardRepository = new CardRepository(ds);
+    cardRepository = new CardRepository(ds, async () => deckRepository);
     deckRepository = new DeckRepository(ds, async () => cardRepository);
   });
 
@@ -36,7 +36,7 @@ describe('DeckRepository (integration)', function () {
   });
 
   describe('findByIdWithCards()', function () {
-    it('should retrieve deck with cards', async () => {
+    it('should retrieve deck with 1 card', async () => {
       // given
       const deck = await givenCreatedDeck(deckRepository);
       const cards = [await givenCreatedCard(cardRepository, {deckId: deck.id})]

@@ -20,7 +20,7 @@ describe('DeckController (unit)', function () {
                 await deckController.findById(invalidUUID);
             } catch (e) {
                 // then
-                expect(e.message).to.eql(`Provided id ${invalidUUID} is not a valid UUID`)
+                expect(e.message).to.eql(`Provided id ${invalidUUID} is not a valid UUID`);
             }
         });
 
@@ -36,7 +36,23 @@ describe('DeckController (unit)', function () {
             // then
             expect(result).to.eql(aDeckWithId);
             sinon.assert.calledWith(findDeck, aDeckWithId.deckId);
-        })
+        });
+
+    });
+
+    describe('draw()', function () {
+        it('should validate id to be valid uuid', async () => {
+            // given
+            const invalidUUID = '123';
+
+            // when
+            try {
+                await deckController.draw(invalidUUID);
+            } catch (e) {
+                // then
+                expect(e.message).to.eql(`Provided id ${invalidUUID} is not a valid UUID`);
+            }
+        });
 
     });
 

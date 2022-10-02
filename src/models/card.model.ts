@@ -1,6 +1,7 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {CardValue} from './card-value.enum';
 import {CardSuit} from './card-suit.enum';
+import {Deck} from './deck.model';
 
 @model({
   settings: {
@@ -30,13 +31,7 @@ export class Card extends Entity {
   })
   suit: CardSuit;
 
-  @property({
-    type: 'string',
-    postgresql: {
-      columnName: 'deck_id',
-      dataType: 'uuid',
-    },
-  })
+  @belongsTo(() => Deck, {keyFrom: 'deck_id', keyTo: 'id'}, {postgresql: {columnName: 'deck_id'}})
   deckId: string;
 
   constructor(data?: Partial<Card>) {

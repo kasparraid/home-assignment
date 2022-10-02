@@ -27,4 +27,10 @@ export class DeckService {
     const cards = deck.cards?.map(card => toCardDto(card)) ?? [];
     return toDeckDto(deck,{remaining: cards.length, cards: cards})
   }
+
+  async drawCards(id: string, count: number) {
+    const deck = await this.deckRepository.findById(id);
+
+    return this.cardService.drawCards(deck.id, count);
+  }
 }

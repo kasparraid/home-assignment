@@ -1,15 +1,21 @@
-import {inject} from '@loopback/core';
-import {DefaultTransactionalRepository} from '@loopback/repository';
+import {inject, Getter} from '@loopback/core';
+import {DefaultTransactionalRepository, repository, BelongsToAccessor} from '@loopback/repository';
 import {PgdbDataSource} from '../datasources';
-import {Card, CardRelations} from '../models';
+import {Card, CardRelations, Deck} from '../models';
+import {DeckRepository} from './deck.repository';
 
 export class CardRepository extends DefaultTransactionalRepository<
   Card,
   typeof Card.prototype.id,
   CardRelations
 > {
-  constructor(@inject('datasources.pgdb') dataSource: PgdbDataSource) {
+
+  public readonly deck: BelongsToAccessor<Deck, typeof Card.prototype.id>;
+
+  constructor(@inject('datasources.pgdb') dataSource: PgdbDataSource, @repository.getter('DeckRepository') protected deckRepositoryGetter: Getter<DeckRepository>,) {
     super(Card, dataSource);
+    this.deck = this.createBelongsToAccessorFor('deck', deckRepositoryGetter,);
+    this.registerInclusionResolver('deck', this.deck.inclusionResolver);
   }
 
   /**
@@ -21,5 +27,9 @@ export class CardRepository extends DefaultTransactionalRepository<
     const created = await this.createAll(cards, {transaction: tx})
     await tx.commit();
     return created;
+  }
+
+  async findByDeckId(id: string, count: number) {
+    return this.find({where: {deckId: id}, limit: count})
   }
 }

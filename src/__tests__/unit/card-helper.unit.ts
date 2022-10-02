@@ -15,7 +15,7 @@ describe('CardHelper (unit)', function () {
       expect(cards.length).to.eql(52);
     });
 
-    it('should generate 32 cards', async () => {
+    it('should generate 36 cards', async () => {
       // given
       const deckId = '123';
 
@@ -23,7 +23,7 @@ describe('CardHelper (unit)', function () {
       const cards = generateCards(deckId, DeckType.SHORT);
 
       // then
-      expect(cards.length).to.eql(32);
+      expect(cards.length).to.eql(36);
     });
   });
 });

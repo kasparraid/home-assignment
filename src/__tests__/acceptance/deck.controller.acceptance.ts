@@ -39,7 +39,7 @@ describe('DeckController (acceptance)', function () {
     // then
     expect(res.body).to.have.property('deckId');
     expect(res.body.type).to.be.eql(DeckType.SHORT);
-    expect(res.body.remaining).to.be.eql(32);
+    expect(res.body.remaining).to.be.eql(36);
   });
 
 });

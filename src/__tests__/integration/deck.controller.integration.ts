@@ -46,7 +46,7 @@ describe('DeckController (integration)', function () {
 
       // then
       expect(result.type).to.eql(aDeckToCreate.type);
-      expect(result.remaining).to.eql(32);
+      expect(result.remaining).to.eql(36);
     });
   });
 });

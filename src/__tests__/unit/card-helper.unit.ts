@@ -1,4 +1,4 @@
-import {generateCards} from '../../helpers';
+import {generateCards, shuffleCards} from '../../helpers';
 import {DeckType} from '../../models';
 import {expect} from '@loopback/testlab';
 
@@ -24,6 +24,20 @@ describe('CardHelper (unit)', function () {
 
       // then
       expect(cards.length).to.eql(36);
+    });
+  });
+
+  describe('shuffleCards()', function () {
+    it('should shuffle cards', async () => {
+      // given
+      const deckId = '123';
+
+      // when
+      const cards = generateCards(deckId, DeckType.FULL);
+      const shuffledCards = shuffleCards(cards);
+
+      // then
+      expect(shuffledCards).not.containDeepOrdered(cards);
     });
   });
 });

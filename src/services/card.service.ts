@@ -2,7 +2,7 @@ import {BindingScope, injectable} from '@loopback/core';
 import {CardRepository} from '../repositories';
 import {repository} from '@loopback/repository';
 import {DeckType} from '../models';
-import {generateCards} from '../helpers';
+import {generateCards, shuffleCards} from '../helpers';
 
 @injectable({scope: BindingScope.TRANSIENT})
 export class CardService {
@@ -11,8 +11,9 @@ export class CardService {
     private cardRepository: CardRepository,
   ) {}
 
-  async createCards(deckId: string, type: DeckType) {
-    const cards = generateCards(deckId, type);
+  async createCards(deckId: string, type: DeckType, shuffled: boolean) {
+    let cards = generateCards(deckId, type);
+    cards = shuffled ? shuffleCards(cards) : cards;
 
     return this.cardRepository.createAllInTransaction(cards);
   }

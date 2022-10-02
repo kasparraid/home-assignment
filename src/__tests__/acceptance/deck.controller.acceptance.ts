@@ -18,7 +18,7 @@ describe('DeckController (acceptance)', function () {
 
   it('User should be able to create a new FULL Deck', async () => {
     // given
-    const payload = {type: DeckType.FULL};
+    const payload = {type: DeckType.FULL, shuffled: false};
 
     // when
     const res = await client.post('/decks').send(payload).expect(200);
@@ -26,12 +26,13 @@ describe('DeckController (acceptance)', function () {
     // then
     expect(res.body).to.have.property('deckId');
     expect(res.body.type).to.be.eql(DeckType.FULL);
+    expect(res.body.shuffled).to.be.false();
     expect(res.body.remaining).to.be.eql(52);
   });
 
   it('User should be able to create a new SHORT Deck', async () => {
     // given
-    const payload = {type: DeckType.SHORT};
+    const payload = {type: DeckType.SHORT, shuffled: false};
 
     // when
     const res = await client.post('/decks').send(payload).expect(200);
@@ -39,7 +40,22 @@ describe('DeckController (acceptance)', function () {
     // then
     expect(res.body).to.have.property('deckId');
     expect(res.body.type).to.be.eql(DeckType.SHORT);
+    expect(res.body.shuffled).to.be.false();
     expect(res.body.remaining).to.be.eql(36);
+  });
+
+  it('User should be able to create a new shuffled Deck', async () => {
+    // given
+    const payload = {type: DeckType.FULL, shuffled: true};
+
+    // when
+    const res = await client.post('/decks').send(payload).expect(200);
+
+    // then
+    expect(res.body).to.have.property('deckId');
+    expect(res.body.type).to.be.eql(DeckType.FULL);
+    expect(res.body.shuffled).to.be.true();
+    expect(res.body.remaining).to.be.eql(52);
   });
 
 });

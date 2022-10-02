@@ -13,3 +13,17 @@ export function generateCards(deckId: string, type: DeckType) {
     });
   });
 }
+
+export function shuffleCards(cards: Card[]) {
+  const shuffledCards = [...cards];
+
+  let m = shuffledCards.length;
+
+  while (m) {
+    const i = Math.floor(Math.random() * m--);
+
+    [shuffledCards[m], shuffledCards[i]] = [shuffledCards[i], shuffledCards[m]];
+  }
+
+  return shuffledCards;
+}

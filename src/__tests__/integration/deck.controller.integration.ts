@@ -35,6 +35,7 @@ describe('DeckController (integration)', function () {
       // then
       expect(result.type).to.eql(aDeckToCreate.type);
       expect(result.remaining).to.eql(52);
+      expect(result.shuffled).to.eql(aDeckToCreate.shuffled);
     });
 
     it('should return a SHORT Deck', async () => {
@@ -47,6 +48,20 @@ describe('DeckController (integration)', function () {
       // then
       expect(result.type).to.eql(aDeckToCreate.type);
       expect(result.remaining).to.eql(36);
+      expect(result.shuffled).to.eql(aDeckToCreate.shuffled);
+    });
+
+    it('should return a shuffled Deck', async () => {
+      // given
+      const aDeckToCreate = givenDeck({shuffled: true});
+
+      // when
+      const result = await deckController.create(aDeckToCreate);
+
+      // then
+      expect(result.type).to.eql(aDeckToCreate.type);
+      expect(result.remaining).to.eql(52);
+      expect(result.shuffled).to.eql(aDeckToCreate.shuffled);
     });
   });
 });

@@ -19,6 +19,12 @@ export class DeckDto extends Model {
   type: DeckType;
 
   @property({
+    type: 'boolean',
+    required: true,
+  })
+  shuffled: boolean;
+
+  @property({
     type: 'number',
     required: true,
   })

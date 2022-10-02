@@ -16,7 +16,7 @@ export class DeckService {
 
   async createDeck(deckToCreate: Partial<Deck>) {
     const deck = await this.deckRepository.create(deckToCreate);
-    const cards = await this.cardService.createCards(deck.id, deck.type);
+    const cards = await this.cardService.createCards(deck.id, deck.type, deck.shuffled);
 
     return toDeckDto(deck, {remaining: cards.length});
   }

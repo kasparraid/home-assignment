@@ -36,6 +36,12 @@ export class Deck extends Entity {
   })
   type: DeckType;
 
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  shuffled: boolean;
+
   constructor(data?: Partial<Deck>) {
     super(data);
   }

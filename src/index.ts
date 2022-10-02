@@ -1,9 +1,13 @@
 import {ApplicationConfig, HomeAssignmentApplication} from './application';
+import * as dotenv from 'dotenv';
 
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {
   const app = new HomeAssignmentApplication(options);
+
+  dotenv.config()
+
   await app.boot();
   await app.start();
 
